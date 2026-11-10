@@ -22,10 +22,14 @@ jobs:
 # ${{ github.event.pull_request.head.repo.fork && 'ubuntu-24.04' || fromJSON('["self-hosted", "alma10"]') }}
   unittest_bundle_1:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork == true
+#    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork == true
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/clean_tmp
+
+      - name: installing dependencies
+        run: | 
+          pip install -r requirements.txt
 
       # ---- unittest_0 ----
       - name: "unittest_0"
