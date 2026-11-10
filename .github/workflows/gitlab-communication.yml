@@ -1,7 +1,6 @@
 name: gitlab-communication.yml
 on: [push]
 
-
 jobs:
   trigger-gitlab:
     runs-on: ubuntu-latest
