@@ -19,9 +19,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-#|| fromJSON('["self-hosted", "alma10"]')
+# ${{ github.event.pull_request.head.repo.fork && 'ubuntu-24.04' || fromJSON('["self-hosted", "alma10"]') }}
   unittest_bundle_1:
-    runs-on: ${{ github.event.pull_request.head.repo.fork && 'ubuntu-24.04' }}
+    runs-on: ubuntu-latest
     if: github.event_name == 'push' || github.event.pull_request.head.repo.fork == true
     steps:
       - uses: actions/checkout@v5
