@@ -29,6 +29,7 @@ jobs:
 
       - name: installing dependencies
         run: | 
+          echo installing the dependencies... 
           pip install -r requirements.txt
 
       # ---- unittest_0 ----
