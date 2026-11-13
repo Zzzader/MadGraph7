@@ -1,11 +1,32 @@
-build-job:
-  stage: build
-  script:
-    - echo "Hello, $GITLAB_USER_LOGIN!"
+#build-job:
+#  stage: build
+#  script:
+#    - echo "Hello, $GITLAB_USER_LOGIN!"
+#
+#
+#test-job1:
+#  stage: test
+#  script:
+#    - echo "This job tests something"
 
 
-test-job1:
+default:
+  image: python:3.13
+  before_script:
+    - echo "instlaling the dependencies..."
+    - pip install -r requirements.txt
+
+stages:
+  - test
+
+unit-test-job1:
   stage: test
   script:
-    - echo "This job tests something"
+    - ./tests/test_manager.py test_v31_syntax_crash test_polarisation_nlo_regimes test_the_exit_from_child_cmd test_the_exit_from_child_cmd2 test_get_final_part test_InvalidCmd test_check_generate test_cleaning_history test_generate_polarised test_help_category test_output_default test_shell_and_continuation_line test_simple_generate test_card_type_recognition test_help_category test_autocompletion test_modif_ML_card test_modif_madweight_card test_modif_param_card test_modif_pythia8_card test_modif_run_card test_modif_shower_card test_modif_reweight_card test_wrapped_model_path test_wrapped_processes test_processes_after_last_import_model test_model_v4 test_default_model test_density_option_survives_every_wrap_position test_regression_layout test_last_output_options test_wrapped_modelname test_density_flag_split_by_the_wrap test_density_flag_on_one_line test_no_density test_write_keeps_long_lines_whole -t0
+
+
+unit-test-job2:
+  stage: test
+  script:
+    - ./tests/test_manager.py test_replace_indices test_representation test_simplify test_to_immutable test_representation test_setget_amplitude_correct test_setget_amplitude_exceptions test_values_for_prop test_decay_chain_pp_jj test_forbidden_s_channel_decay_chain test_representation test_setget_process_correct test_setget_process_exceptions test_unused_decays_in_decay_chain_pp_jj test_combine_legs_gluons test_combine_legs_uux_ddx test_combine_legs_uux_uuxuux test_coupling_orders_uux_ddxng test_decay_process_generation -t0
 
