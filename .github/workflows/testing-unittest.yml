@@ -46,24 +46,60 @@ jobs:
 #            cd $GITHUB_WORKSPACE
 #            ./tests/test_manager.py test_replace_indices test_representation test_simplify test_to_immutable test_representation test_setget_amplitude_correct test_setget_amplitude_exceptions test_values_for_prop test_decay_chain_pp_jj test_forbidden_s_channel_decay_chain test_representation test_setget_process_correct test_setget_process_exceptions test_unused_decays_in_decay_chain_pp_jj test_combine_legs_gluons test_combine_legs_uux_ddx test_combine_legs_uux_uuxuux test_coupling_orders_uux_ddxng test_decay_process_generation -t0
 
-
   trigger-gitlab:
     runs-on: ubuntu-latest
-#    if: contains(github.event.head_commit.message, 'GPU')
-#    outputs:
-#      gitlab_id: ${{ steps.gitlab_pipeline_id.outputs.pipeline_id}}
+    if: contains(github.event.head_commit.message, 'GPU')
+    outputs:
+      gitlab_id: ${{ steps.gitlab_pipeline_id.outputs.PIPELINE_ID}}
     steps:
       - name: Trigger gitlab pipeline
         id: gitlab_pipeline_id
         run: |
           echo Before triggering gitlab pipeline
           echo env variable: $GITHUB_REF_NAME
-          curl --request POST \
+          RESPONSE=$(curl --request POST \
             --form token=${{secrets.TRIGGER_GITLAB_PIPELINE}} \
             --form ref=${{github.ref_name}} \
-            "https://gitlab.cern.ch/api/v4/projects/${{secrets.PROJECT_ID}}/trigger/pipeline"
-#          PIPELINE_ID=$(echo "$RESPONSE" | jq '.id')
-#          echo "pipeline_id=$PIPELINE_ID" >> $GITHUB_OUTPUT
-#      - name: checking for output accessing in step
+            "https://gitlab.cern.ch/api/v4/projects/${{secrets.PROJECT_ID}}/trigger/pipeline")
+          GITLAB_PIPELINE_ID=$(echo "$RESPONSE" | jq '.id')
+          echo pipleine id check: $GITLAB_PIPELINE_ID : end of id 
+          echo "PIPELINE_ID=$GITLAB_PIPELINE_ID" >> $GITHUB_OUTPUT
+
+  request_gitlab_logs:
+    runs-on: ubuntu-latest
+    needs: [trigger-gitlab]
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v7
+
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v2.0.3
+        with:
+          envkey_PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          envkey_GITLAB_API_KEY: ${{ secrets.GITLAB_PROJECT_ACCESS_TOKEN}}
+          file_name: .env
+          fail_on_empty: false
+          sort_keys: false
+
+      - name: set up python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+
+      - name: installing dependencies
+        run: |
+          pip install -r requirements.txt
+
+#      - name: reading output of prior job
+#        env:
+#          OUTPUT: ${{needs.debugging_job_outputs.outputs.gitlab_id}}
 #        run: |
-#          echo ${{ steps.gitlab_pipeline_id.outputs.pipeline_id}}
+#          echo "the given output is: $OUTPUT"
+
+#      - name: run debug python script
+#        run: |
+#          python testing_envfile.py  ${{needs.debugging_job_outputs.outputs.gitlab_id}}
+      - name: run python script
+        run: |
+          echo ${{needs.trigger-gitlab.outputs.gitlab_id}}
+          python Log_data.py  ${{needs.trigger-gitlab.outputs.gitlab_id}}
