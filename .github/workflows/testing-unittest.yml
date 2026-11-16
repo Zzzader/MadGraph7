@@ -102,4 +102,4 @@ jobs:
       - name: run python script
         run: |
           echo ${{needs.trigger-gitlab.outputs.gitlab_id}}
-          python Log_data.py  ${{needs.trigger-gitlab.outputs.gitlab_id}}
+          python request_logs.py  ${{needs.trigger-gitlab.outputs.gitlab_id}}
