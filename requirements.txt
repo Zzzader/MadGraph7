@@ -1,7 +1,7 @@
 numpy~=2.3.3
 six~=1.17.0
 pyreadline3~=3.5.4
-torch~=2.8.0
+torch~=2.9.0
 tqdm~=4.67.1
 PyYAML~=6.0.2
 requests~=2.32.5
