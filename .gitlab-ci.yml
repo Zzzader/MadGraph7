@@ -30,3 +30,11 @@ unit-test-job2:
   script:
     - ./tests/test_manager.py test_replace_indices test_representation test_simplify test_to_immutable test_representation test_setget_amplitude_correct test_setget_amplitude_exceptions test_values_for_prop test_decay_chain_pp_jj test_forbidden_s_channel_decay_chain test_representation test_setget_process_correct test_setget_process_exceptions test_unused_decays_in_decay_chain_pp_jj test_combine_legs_gluons test_combine_legs_uux_ddx test_combine_legs_uux_uuxuux test_coupling_orders_uux_ddxng test_decay_process_generation -t0
 
+failing-test:
+  stage: test
+  script:
+    echo "this job is failing on purpose..."
+    echo "Testing failing behaviour!!.."
+    echo "More logs ... yuhhh .... *** WEIRD_CHARACTERS_TO_EASILY_FIND BACK THIS LOG IN THE LOGS CLOUD "
+    exit 1
+
