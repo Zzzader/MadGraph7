@@ -8,7 +8,6 @@ import sys
 load_dotenv()
 
 # needed:
-#dev
 gl = gitlab.Gitlab(url="https://gitlab.cern.ch", private_token=os.getenv("GITLAB_API_KEY"))
 
 project = gl.projects.get(os.getenv("PROJECT_ID"))
