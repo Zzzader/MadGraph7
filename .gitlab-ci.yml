@@ -34,8 +34,9 @@ unit-test-job2:
 failing-test:
   stage: test
   script:
-    echo "this job is failing on purpose..."
-    echo "Testing failing behaviour!!.."
-    echo "More logs ... yuhhh .... *** WEIRD_CHARACTERS_TO_EASILY_FIND BACK THIS LOG IN THE LOGS CLOUD "
-    exit 1
+    - echo "this job is failing on purpose..."
+    - echo "Testing failing behaviour!!.."
+    - echo "More logs ... yuhhh .... *** WEIRD_CHARACTERS_TO_EASILY_FIND BACK THIS LOG IN THE LOGS CLOUD "
+    - exit 1
+
 
