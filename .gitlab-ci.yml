@@ -9,11 +9,12 @@
 #  script:
 #    - echo "This job tests something"
 
+#docker pull python:3.14
 
 default:
   image: python:3.13
   before_script:
-    - echo "instlaling the dependencies..."
+    - echo "installing the dependencies..."
     - pip install -r requirements.txt
 
 stages:

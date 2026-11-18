@@ -18,7 +18,9 @@ def main():
     # job_list = get_job_of_pipeline()
     # log_list = retrieve_job_logs(job_list)
     # save_job_logs(log_list)
-    show_job_logs_on_console(log_list)
+    # show_job_logs_on_console(log_list)
+
+    show_job_logs_on_console()
 
 # def get_job_of_pipeline():
 #     jobs = pipeline.jobs.list(get_all=True)
@@ -58,7 +60,7 @@ def main():
 #         else:
 #             print("Log file already exists")
 
-def show_job_logs_on_console(log_list):
+def show_job_logs_on_console():
     # for log in log_list:
     #     print(f"Log of job ID: {log["id"]}")
     #     print(str(log["log_file"]))
