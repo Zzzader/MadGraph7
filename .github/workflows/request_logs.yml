@@ -1,6 +1,8 @@
 name: request_logs.yml
 on:
   workflow_dispatch:
+    inputs:
+      gitlab_pipeline_id:
 
 jobs:
   request_gitlab_logs:
@@ -38,5 +40,4 @@ jobs:
 #          python testing_envfile.py  ${{needs.debugging_job_outputs.outputs.gitlab_id}}
       - name: run python script
         run: |
-          echo ${{needs.trigger-gitlab.outputs.gitlab_id}}
-          python request_logs.py  ${{inputs.gitlab_pipeline_id}}
+          python request_logs.py ${{inputs.gitlab_pipeline_id}}
