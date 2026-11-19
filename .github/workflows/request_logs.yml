@@ -1,0 +1,42 @@
+name: request_logs.yml
+on:
+  workflow_dispatch:
+
+jobs:
+  request_gitlab_logs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v7
+
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v2.0.3
+        with:
+          envkey_PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          envkey_GITLAB_API_KEY: ${{ secrets.GITLAB_PROJECT_ACCESS_TOKEN}}
+          file_name: .env
+          fail_on_empty: false
+          sort_keys: false
+
+      - name: set up python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+
+      - name: installing dependencies
+        run: |
+          pip install -r requirements.txt
+
+#      - name: reading output of prior job
+#        env:
+#          OUTPUT: ${{needs.debugging_job_outputs.outputs.gitlab_id}}
+#        run: |
+#          echo "the given output is: $OUTPUT"
+
+#      - name: run debug python script
+#        run: |
+#          python testing_envfile.py  ${{needs.debugging_job_outputs.outputs.gitlab_id}}
+      - name: run python script
+        run: |
+          echo ${{needs.trigger-gitlab.outputs.gitlab_id}}
+          python request_logs.py  ${{needs.trigger-gitlab.outputs.gitlab_id}}
