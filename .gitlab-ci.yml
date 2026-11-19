@@ -54,5 +54,4 @@ notif-job:
         https://api.github.com/repos/$OWNER/$REPO/actions/workflows/$WORKFLOW/dispatches \
       ) 
     - echo $RESPONSE
-      
-      
+
