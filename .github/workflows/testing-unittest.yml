@@ -64,4 +64,5 @@ jobs:
           GITLAB_PIPELINE_ID=$(echo "$RESPONSE" | jq '.id')
           echo pipleine id check: $GITLAB_PIPELINE_ID : end of id
           echo "PIPELINE_ID=$GITLAB_PIPELINE_ID" >> $GITHUB_OUTPUT
+          echo "running gitlab pipeline......"
 
