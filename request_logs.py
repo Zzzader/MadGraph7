@@ -86,7 +86,6 @@ def raise_exception_if_there_is_a_failed_job(failed_job_list):
     for job in failed_job_list:
         print(Fore.RED + f"JOB ID: {job["id"]} - WITH STATUS: {job["status"]}")
         print(Style.RESET_ALL + str(job["log_file"]))
-
     raise Exception("There are failed jobs present. See the logs above. ")
 
 
