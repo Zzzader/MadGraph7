@@ -40,4 +40,4 @@ jobs:
 #          python testing_envfile.py  ${{needs.debugging_job_outputs.outputs.gitlab_id}}
       - name: run python script
         run: |
-          python request_logs.py ${{inputs.gitlab_pipeline_id}}
+          python -u request_logs.py ${{inputs.gitlab_pipeline_id}}
