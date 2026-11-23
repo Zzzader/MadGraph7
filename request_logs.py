@@ -14,9 +14,9 @@ gl = gitlab.Gitlab(url="https://gitlab.cern.ch", private_token=os.getenv("GITLAB
 project = gl.projects.get(os.getenv("PROJECT_ID"))
 # project = gl.projects.get(248973)
 
-pipeline = project.pipelines.get(sys.argv[1])
+# pipeline = project.pipelines.get(sys.argv[1])
 #dev
-# pipeline = project.pipelines.get(16457618)
+pipeline = project.pipelines.get(16457618)
 
 def main():
     job_list = get_job_of_pipeline()
@@ -42,7 +42,7 @@ def retrieve_job_logs(job_list):
     log_dict_list = []
     for job in job_list:
         log_file = job.trace()
-        log_dict = {'id': job.id, 'log_file': log_file, 'status': job.status}
+        log_dict = {'id': job.id, 'log_file': log_file.decode("utf-8"), 'status': job.status}
         log_dict_list.append(log_dict)
 
     return log_dict_list
@@ -74,7 +74,7 @@ def show_job_logs_on_console(log_list):
             # print(f"failed job: {log["status"]} with id {log["id"]}")
         else:
             print(Fore.GREEN + f"SUCCEEDED JOB:  {log["id"]} STATUS: {log["status"]}")
-            print(Style.RESET_ALL + str(log["log_file"]))
+            print(Style.RESET_ALL + log["log_file"])
 
     print(Fore.MAGENTA + "length of the failed job list: " + str(len(failed_job_list)))
     if len(failed_job_list) != 0:
@@ -85,7 +85,7 @@ def raise_exception_if_there_is_a_failed_job(failed_job_list):
     print("============================================================== LOGS OF FAILED JOBS: ===================================================================")
     for job in failed_job_list:
         print(Fore.RED + f"JOB ID: {job["id"]} - WITH STATUS: {job["status"]}")
-        print(Style.RESET_ALL + str(job["log_file"]))
+        print(Style.RESET_ALL + job["log_file"])
     raise Exception("There are failed jobs present. See the logs above. ")
 
 
