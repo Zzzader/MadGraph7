@@ -14,9 +14,9 @@ gl = gitlab.Gitlab(url="https://gitlab.cern.ch", private_token=os.getenv("GITLAB
 project = gl.projects.get(os.getenv("PROJECT_ID"))
 # project = gl.projects.get(248973)
 
-# pipeline = project.pipelines.get(sys.argv[1])
+pipeline = project.pipelines.get(sys.argv[1])
 #dev
-pipeline = project.pipelines.get(16457618)
+# pipeline = project.pipelines.get(16457618)
 
 def main():
     job_list = get_job_of_pipeline()
