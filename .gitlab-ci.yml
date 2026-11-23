@@ -196,7 +196,6 @@ unit-test-madspace_install-job19:
     - ./tests/test_manager.py test_madspace_install -t0
 
 
-
 #failing-test:
 #  stage: test
 #  script:
