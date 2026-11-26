@@ -1,4 +1,3 @@
-
 stages:
   - unit-tests
   - some-other-test
