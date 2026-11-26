@@ -10,7 +10,11 @@ trigger-unit-test-pipeline:
     include: .gitlab-pipelines/unit-tests.yml
     strategy: mirror
 
-
+trigger-some-heavy-test-pipeline:
+  stage: some-other-test
+  trigger:
+    include: .gitlab-pipelines/heavy-test.yml
+    strategy: mirror
 
 
 #failing-test:
